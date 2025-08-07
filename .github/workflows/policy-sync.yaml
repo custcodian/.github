@@ -1,0 +1,53 @@
+name: Sync Minder Policies
+# Generated with Gemini-2.5 Pro with the following prompt:
+#   write a GitHub Actions workflow which will checkout this repo and
+#   custcodian/minder-rules-and-profiles, create a `minder` directory
+#   in this repo if needed, delete the `top-5` directory within the
+#   `minder` repo, and then copy the contents (dereferencing symlinks)
+#   from the `top-5` directory in minder-rules-and-profiles to this
+#   repo.  The end result should be a PR to this repo to update the
+#   files in `minder/top-5`.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 8 * * 1" # Run every Monday at 8 AM UTC
+
+jobs:
+  sync-policies:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v4
+
+      - name: Checkout minder-rules-and-profiles repository
+        id: reference-checkout
+        uses: actions/checkout@v4
+        with:
+          repository: custcodian/minder-rules-and-profiles
+          path: minder-rules-and-profiles
+
+      - name: Sync policy files
+        run: |
+          mkdir -p minder
+          rm -rf minder/top-5
+          cp -rL minder-rules-and-profiles/top-5 minder/
+      # TODO: track previous commit and provide link to changes
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: sync minder policies at {{ steps.reference-checkout.outputs.ref }} from custcodian/minder-rules-and-profiles"
+          title: "Update Minder Policies"
+          body: |
+            This PR updates the minder policies [from the `custcodian/minder-rules-and-profiles`
+            repository at {{ steps.reference-checkout.outputs.ref }}
+            ](https://github.com/custcodian/minder-rules-and-profiles/tree/{{ steps.reference-checkout.outputs.ref }}).
+
+            This is an automated PR.
+          branch: "chore/sync-minder-policies"
+          delete-branch: true
+          labels: "automated pr, chore"
