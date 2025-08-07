@@ -5,7 +5,7 @@ display_name: Custcodian Top 5 Security Recommendations
 context:
   provider: github
 alert: "off"
-remediate: "off"
+remediate: "on"
 repository:
   - type: default_branch_pr_required
     def: {}
