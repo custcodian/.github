@@ -24,7 +24,7 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
     - name: Apply Minder Config
-      uses: custcodian/minder-action@3a0298592619a0feb118d134f9443c9aea60eead  # Will be v1.1
+      uses: custcodian/minder-action@1e797abf4f2b29378f70ca5c604c6a589b07e970  # Will be v1.1
       with:
         server: api.custcodian.dev
         project: github-custcodian
