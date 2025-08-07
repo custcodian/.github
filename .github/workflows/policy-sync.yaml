@@ -37,17 +37,17 @@ jobs:
           cp -rL minder-rules-and-profiles/top-5 minder/
       # TODO: track previous commit and provide link to changes
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: sync minder policies at {{ steps.reference-checkout.outputs.ref }} from custcodian/minder-rules-and-profiles"
+          commit-message: "chore: sync minder policies at ${{ steps.reference-checkout.outputs.ref }} from custcodian/minder-rules-and-profiles"
           title: "Update Minder Policies"
           body: |
             This PR updates the minder policies [from the `custcodian/minder-rules-and-profiles`
-            repository at {{ steps.reference-checkout.outputs.ref }}
-            ](https://github.com/custcodian/minder-rules-and-profiles/tree/{{ steps.reference-checkout.outputs.ref }}).
+            repository at ${{ steps.reference-checkout.outputs.ref }}
+            ](https://github.com/custcodian/minder-rules-and-profiles/tree/${{ steps.reference-checkout.outputs.ref }}).
 
             This is an automated PR.
           branch: "chore/sync-minder-policies"
           delete-branch: true
+          sign-commits: true
           labels: "automated pr, chore"
