@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout local repository
         uses: actions/checkout@v4
+        with:
+          path: github
 
       - name: Checkout minder-rules-and-profiles repository
         id: reference-checkout
@@ -32,13 +34,14 @@ jobs:
 
       - name: Sync policy files
         run: |
-          mkdir -p minder
-          rm -rf minder/top-5
-          cp -rL minder-rules-and-profiles/top-5 minder/
+          mkdir -p github/minder
+          rm -rf github/minder/top-5
+          cp -rL minder-rules-and-profiles/top-5 github/minder/
       # TODO: track previous commit and provide link to changes
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
+          path: github
           commit-message: "chore: sync minder policies at ${{ steps.reference-checkout.outputs.commit }} from custcodian/minder-rules-and-profiles"
           title: "Update Minder Policies"
           body: |
