@@ -20,36 +20,9 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - name: Checkout local repository
-        uses: actions/checkout@v4
+      - name: Sync catalog from custcodian/minder-rules-and-profiles
+        uses: custcodian/sync-catalog@v1
         with:
-          path: github
+          policy_dirs:
+            - top-5
 
-      - name: Checkout minder-rules-and-profiles repository
-        id: reference-checkout
-        uses: actions/checkout@v4
-        with:
-          repository: custcodian/minder-rules-and-profiles
-          path: minder-rules-and-profiles
-
-      - name: Sync policy files
-        run: |
-          mkdir -p github/minder
-          rm -rf github/minder/top-5
-          cp -rL minder-rules-and-profiles/top-5 github/minder/
-          echo "This directory copied from [custcodian/minder-rules-and-profiles at commit ${{ steps.reference-checkout.outputs.commit }}](https://github.com/custcodian/minder-rules-and-profiles/tree/${{ steps.reference-checkout.outputs.commit }}/top-5)." > github/minder/top-5/README.md
-      # TODO: track previous commit and provide link to changes
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7
-        with:
-          path: github
-          commit-message: "chore: sync minder policies at ${{ steps.reference-checkout.outputs.commit }} from custcodian/minder-rules-and-profiles"
-          title: "Update Minder Policies"
-          body: |
-            This PR updates the minder policies [from the `custcodian/minder-rules-and-profiles` repository at ${{ steps.reference-checkout.outputs.ref }}](https://github.com/custcodian/minder-rules-and-profiles/tree/${{ steps.reference-checkout.outputs.commit }}).
-
-            This is an automated PR.
-          branch: "chore/sync-minder-policies"
-          sign-commits: true
-          delete-branch: true
-          labels: "automated pr, chore"
