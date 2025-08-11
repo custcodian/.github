@@ -23,6 +23,5 @@ jobs:
       - name: Sync catalog from custcodian/minder-rules-and-profiles
         uses: custcodian/sync-catalog@v1
         with:
-          policy_dirs:
-            - top-5
+          policy_dirs: top-5
 
