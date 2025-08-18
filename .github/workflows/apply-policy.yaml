@@ -22,7 +22,7 @@ jobs:
     steps:
     # TODO: enable pinning.
     - name: Checkout repo
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     - name: Apply Minder Config
       uses: custcodian/minder-action@3a0298592619a0feb118d134f9443c9aea60eead  # Will be v1.1
       with:
