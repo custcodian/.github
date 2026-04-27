@@ -1,1 +1,1 @@
-These policies copied from [custcodian/minder-rules-and-profiles at commit 7b49c60a1a7ac786f5d9c678e8b57cff7637f783](https://github.com/custcodian/minder-rules-and-profiles/tree/7b49c60a1a7ac786f5d9c678e8b57cff7637f783)
+These policies copied from [custcodian/minder-rules-and-profiles at commit 80ed5d78135b42be5be8c10330a6bf8674370f06](https://github.com/custcodian/minder-rules-and-profiles/tree/80ed5d78135b42be5be8c10330a6bf8674370f06)
